@@ -34,11 +34,7 @@
         // "@typescript-eslint/indent": ["error", 2],
         "@typescript-eslint/comma-dangle": "off",
         "@typescript-eslint/lines-between-class-members": "off",
-        "@typescript-eslint/quotes": [
-          "error",
-          "single",
-          { "allowTemplateLiterals": true }
-        ],
+        "@typescript-eslint/quotes": ["error", "single", { "allowTemplateLiterals": true }],
         "@typescript-eslint/no-shadow": "error",
 
         // Angular ESLint rules
@@ -46,7 +42,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "rs",
+            "prefix": "app",
             "style": "camelCase"
           }
         ],
@@ -54,7 +50,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "rs",
+            "prefix": "app",
             "style": "kebab-case"
           }
         ]
