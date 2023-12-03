@@ -31,8 +31,8 @@
         "import/newline-after-import": "error",
         "import/no-duplicates": "error",
         "max-len": ["error", 120],
-        "simple-import-sort/imports": "error",
-        "simple-import-sort/exports": "error",
+        // "simple-import-sort/imports": "error",
+        // "simple-import-sort/exports": "error",
         "@typescript-eslint/comma-dangle": "off",
         "@typescript-eslint/lines-between-class-members": "off",
         "@typescript-eslint/quotes": [
