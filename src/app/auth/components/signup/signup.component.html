@@ -1,0 +1,89 @@
+<p-card class="form-container">
+  <h2 class="title">Already has an account? Log in!</h2>
+  <p-button routerLink="../login" class="p-fluid" [raised]="true">Log in</p-button>
+
+  <p-divider></p-divider>
+
+  <h2 class="title">Are you new here? Sign up!</h2>
+
+  <form [formGroup]="form">
+    <div class="field p-fluid">
+      <label for="firstname">First name</label>
+      <input formControlName="name" id="firstname" type="text" aria-describedby="Enter your first name" pInputText />
+      <small *ngIf="nameControl?.invalid && nameControl?.touched" id="firstname-help" class="p-error">{{
+        getErrorMessage(nameControl)
+      }}</small>
+    </div>
+    <div class="field p-fluid">
+      <label for="email">Email</label>
+      <input
+        formControlName="email"
+        id="email"
+        type="email"
+        aria-describedby="Enter your email"
+        autocomplete="email"
+        pInputText />
+      <small *ngIf="emailControl?.invalid && emailControl?.touched" id="email-help" class="p-error">{{
+        getErrorMessage(emailControl)
+      }}</small>
+    </div>
+
+    <div class="field p-fluid">
+      <label for="password">Password</label>
+      <p-password
+        formControlName="password"
+        id="password"
+        aria-describedby="Enter your password"
+        autocomplete="new-password"
+        [toggleMask]="true">
+        <ng-template pTemplate="header">
+          <h6>Pick a password</h6>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <p-divider></p-divider>
+          <p class="mt-2">Suggestions</p>
+          <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+            <li>At least one uppercase</li>
+            <li>At least one numeric</li>
+            <li>Minimum 8 characters</li>
+          </ul>
+        </ng-template></p-password
+      >
+      <small *ngIf="passwordControl?.invalid && passwordControl?.touched" id="password-help" class="p-error">{{
+        getErrorMessage(passwordControl)
+      }}</small>
+    </div>
+
+    <div class="field p-fluid">
+      <label for="confirmPassword">Confirm password</label>
+      <input
+        formControlName="confirmPassword"
+        id="confirmPassword"
+        type="password"
+        autocomplete="off"
+        aria-describedby="Confirm yout password"
+        pInputText />
+      <small
+        *ngIf="confirmPasswordControl?.invalid && confirmPasswordControl?.touched"
+        id="password-help"
+        class="p-error"
+        >{{ getErrorMessage(confirmPasswordControl) }}</small
+      >
+      <small
+        *ngIf="form.hasError('confirmPassword') && confirmPasswordControl?.touched"
+        id="password-help"
+        class="p-error"
+        >{{ getErrorMessage(form) }}</small
+      >
+    </div>
+
+    <p-button
+      (onClick)="onSubmit(); $event.preventDefault()"
+      [disabled]="form.invalid"
+      class="submit-btn"
+      type="submit"
+      [raised]="true"
+      >Sign up</p-button
+    >
+  </form>
+</p-card>
