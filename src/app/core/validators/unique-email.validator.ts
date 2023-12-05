@@ -1,6 +1,6 @@
 import { AbstractControl, AsyncValidator, ValidationErrors } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Observable, map } from 'rxjs';
+import { Observable, map, take } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { selectAuthErrorEmail } from '../../auth/state/auth.selectors';
 
@@ -17,7 +17,8 @@ export class UniqueEmailValidator implements AsyncValidator {
               emailExist: true,
             }
           : null;
-      })
+      }),
+      take(1)
     );
   }
 

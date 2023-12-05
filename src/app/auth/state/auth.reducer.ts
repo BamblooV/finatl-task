@@ -5,7 +5,7 @@ import { AuthState } from '../types';
 
 export const initialState: AuthState = {
   currentUser: null,
-  error: { type: '', message: 'A mail@mail' },
+  error: null,
   loading: false,
 };
 

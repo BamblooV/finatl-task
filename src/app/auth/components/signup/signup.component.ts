@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { passwordMatchesValidator, passwordStrengthValidator } from '@core/validators';
+import { UniqueEmailValidator, passwordMatchesValidator, passwordStrengthValidator } from '@core/validators';
 import { Store } from '@ngrx/store';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -61,7 +61,7 @@ export class SignupComponent {
   form = this.fb.group(
     {
       name: ['', [Validators.required, Validators.maxLength(40), Validators.pattern(/^[a-zA-Z\s]+$/)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email], [this.uniqueEmail.validate.bind(this.uniqueEmail)]],
       password: ['', [Validators.required, passwordStrengthValidator]],
       confirmPassword: ['', [Validators.required]],
     },
@@ -116,6 +116,7 @@ export class SignupComponent {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly store: Store
+    private readonly store: Store,
+    private readonly uniqueEmail: UniqueEmailValidator
   ) {}
 }
