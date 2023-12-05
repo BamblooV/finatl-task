@@ -10,8 +10,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
-import { selectAuthLoading } from '../../state/auth.selectors';
+import { filter } from 'rxjs';
+import { selectAuthError, selectAuthLoading } from '../../state/auth.selectors';
 import { LoginCredentials } from '../../types';
+import { AuthActions } from '../../state';
 
 @Component({
   selector: 'app-login',
@@ -36,9 +38,18 @@ export class LoginComponent {
   private errorMessages: Record<string, string> = {
     required: 'Field is required',
     email: 'Incorrect email',
+    notFound: 'Unknown email or password',
   };
 
   isLoading$ = this.store.select(selectAuthLoading);
+  emailError$ = this.store
+    .select(selectAuthError)
+    .pipe(filter(error => error?.type === 'NotFoundException'))
+    .subscribe({
+      next: () => {
+        this.form.setErrors({ notFound: true });
+      },
+    });
 
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -81,7 +92,7 @@ export class LoginComponent {
 
     console.log(userCreds);
 
-    // this.store.dispatch(AuthActions.registerUser({ credentials: userCreds }));
+    this.store.dispatch(AuthActions.loginUser({ credentials: userCreds }));
   }
 
   constructor(

@@ -5,7 +5,7 @@
 
   <p-divider></p-divider>
 
-  <h2 class="title">Hurry to log in!</h2>
+  <h2 class="title">Hurry up to log in!</h2>
 
   <form [formGroup]="form">
     <div class="field p-fluid">
@@ -29,23 +29,14 @@
         id="password"
         aria-describedby="Enter your password"
         autocomplete="new-password"
-        [toggleMask]="true">
-        <ng-template pTemplate="header">
-          <h6>Pick a password</h6>
-        </ng-template>
-        <ng-template pTemplate="footer">
-          <p-divider></p-divider>
-          <p class="mt-2">Suggestions</p>
-          <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
-            <li>At least one uppercase</li>
-            <li>At least one numeric</li>
-            <li>Minimum 8 characters</li>
-          </ul>
-        </ng-template></p-password
-      >
+        [toggleMask]="true"
+        [feedback]="false">
+      </p-password>
       <small *ngIf="passwordControl?.invalid && passwordControl?.touched" id="password-help" class="p-error">{{
         getErrorMessage(passwordControl)
       }}</small>
+
+      <small *ngIf="form.invalid && form.touched" class="p-error">{{ getErrorMessage(form) }}</small>
     </div>
 
     <p-button
