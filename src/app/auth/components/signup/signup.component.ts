@@ -3,12 +3,16 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { passwordMatchesValidator, passwordStrengthValidator } from '@core/validators';
+import { Store } from '@ngrx/store';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { PasswordModule } from 'primeng/password';
+import { ToastModule } from 'primeng/toast';
+import { AuthActions } from '../../state';
+import { UserCredentials } from '../../types';
 
 @Component({
   selector: 'app-signup',
@@ -23,6 +27,7 @@ import { PasswordModule } from 'primeng/password';
     MessagesModule,
     RouterLink,
     PasswordModule,
+    ToastModule,
   ],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
@@ -47,7 +52,7 @@ export class SignupComponent {
       confirmPassword: ['', [Validators.required]],
     },
     {
-      updateOn: 'blur',
+      updateOn: 'change',
       validators: [passwordMatchesValidator],
     }
   );
@@ -82,8 +87,21 @@ export class SignupComponent {
     this.form.markAllAsTouched();
     if (this.form.invalid) return;
 
-    console.log(this.form.value);
+    const { email, name, password } = this.form.value;
+
+    if (!email || !name || !password) return;
+
+    const userCreds: UserCredentials = {
+      email,
+      name,
+      password,
+    };
+
+    this.store.dispatch(AuthActions.registerUser({ credentials: userCreds }));
   }
 
-  constructor(private readonly fb: FormBuilder) {}
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly store: Store
+  ) {}
 }
