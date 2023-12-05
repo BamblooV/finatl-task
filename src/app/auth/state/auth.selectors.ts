@@ -9,3 +9,4 @@ export const selectAuthErrorEmail = createSelector(
   selectAuth,
   (state: AuthState) => state.error?.message.split(' ')?.[1]
 );
+export const selectAuthIsLoggedIn = createSelector(selectAuth, (state: AuthState) => !!state.currentUser);

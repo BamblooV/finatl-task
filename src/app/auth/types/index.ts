@@ -1,4 +1,4 @@
 export * from './user.model';
 export * from './user-creds.model';
 export * from './auth-state.model';
-export * from './auth-credentials.model';
+export * from './login-credentials.model';
