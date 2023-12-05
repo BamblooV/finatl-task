@@ -10,7 +10,5 @@ export const registerUserFailure = createAction(
   props<{ response: ErrorResponse }>()
 );
 
-export const showSuccessRegisterToast = createAction('[Auth API] Register complete', props<{ message: string }>());
-
 export const signin = createAction('[AUTH] Sign in', props<{ user: User }>());
 export const logout = createAction('[AUTH] Logout');
