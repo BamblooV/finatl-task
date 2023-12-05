@@ -16,8 +16,7 @@ const routes: Routes = [
       },
       {
         path: 'login',
-        loadComponent: () => import('@auth/components/signup/signup.component').then(mod => mod.SignupComponent),
-        // redirectTo: 'signup',
+        loadComponent: () => import('@auth/components/login/login.component').then(mod => mod.LoginComponent),
       },
     ],
   },
