@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, of, tap } from 'rxjs';
 import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 import { AuthApiService } from '../services/auth-api.service';
 import { AuthActions } from '.';
 
@@ -24,6 +25,7 @@ export class AuthEffects {
       return this.actions$.pipe(
         ofType(AuthActions.registerUserSuccess),
         tap(action => {
+          this.router.navigateByUrl('auth/login');
           this.toast.add({ severity: 'success', summary: 'Success', detail: action.message });
         })
       );
@@ -46,6 +48,7 @@ export class AuthEffects {
   constructor(
     private readonly actions$: Actions,
     private readonly authService: AuthApiService,
-    private readonly toast: MessageService
+    private readonly toast: MessageService,
+    private readonly router: Router
   ) {}
 }

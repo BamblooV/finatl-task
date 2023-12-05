@@ -1,6 +1,6 @@
-import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-export function passwordStrengthValidator(control: AbstractControl<string>): ValidationErrors | null {
+export const passwordStrengthValidator: ValidatorFn = (control: AbstractControl<string>): ValidationErrors | null => {
   const { value } = control;
 
   if (!value) {
@@ -30,4 +30,4 @@ export function passwordStrengthValidator(control: AbstractControl<string>): Val
   }
 
   return null;
-}
+};

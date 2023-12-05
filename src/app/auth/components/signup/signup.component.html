@@ -80,7 +80,7 @@
 
     <p-button
       (onClick)="onSubmit(); $event.preventDefault()"
-      [disabled]="form.invalid"
+      [disabled]="form.invalid || !!(isLoading$ | async)"
       class="submit-btn"
       type="submit"
       [raised]="true"

@@ -11,8 +11,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
+import { filter } from 'rxjs';
 import { AuthActions } from '../../state';
 import { UserCredentials } from '../../types';
+import { selectAuthError, selectAuthLoading } from '../../state/auth.selectors';
 
 @Component({
   selector: 'app-signup',
@@ -43,7 +45,19 @@ export class SignupComponent {
       // eslint-disable-next-line max-len
       'Password should be at least 8 characters, has a uppercase letter, has a mixture of letters and numbers and include at least one special character, e.g., ! @ # ? ]',
     confirmPassword: 'Passwords should match',
+    emailExist: 'Email already taken',
   };
+
+  isLoading$ = this.store.select(selectAuthLoading);
+  emailError$ = this.store
+    .select(selectAuthError)
+    .pipe(filter(error => error?.type === 'PrimaryDuplicationException'))
+    .subscribe({
+      next: () => {
+        this.emailControl?.setErrors({ emailExist: true });
+      },
+    });
+
   form = this.fb.group(
     {
       name: ['', [Validators.required, Validators.maxLength(40), Validators.pattern(/^[a-zA-Z\s]+$/)]],
