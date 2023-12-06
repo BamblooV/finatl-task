@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { LayoutComponent } from './components/layout/layout.component';
+import { LayoutComponent } from '../components/layout/layout.component';
 
 export default [
   {
