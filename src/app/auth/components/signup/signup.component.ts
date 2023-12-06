@@ -54,7 +54,7 @@ export class SignupComponent implements OnDestroy {
     .select(selectAuthError)
     .pipe(
       takeUntil(this.destroy$),
-      filter(error => error?.type === 'PrimaryDuplicationException')
+      filter(error => !!error && error.type === 'PrimaryDuplicationException')
     )
     .subscribe({
       next: () => {

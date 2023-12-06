@@ -1,8 +1,8 @@
-import { ErrorResponse } from '@core/types';
 import { User } from './user.model';
+import { SignupErrorResponse } from './signup-error-response.model';
 
 export type AuthState = {
   currentUser: User | null;
-  error: ErrorResponse | null;
+  error: SignupErrorResponse | null;
   loading: boolean;
 };
