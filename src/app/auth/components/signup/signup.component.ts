@@ -70,7 +70,6 @@ export class SignupComponent implements OnDestroy {
       confirmPassword: ['', [Validators.required]],
     },
     {
-      updateOn: 'change',
       validators: [passwordMatchesValidator],
     }
   );
