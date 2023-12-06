@@ -1,0 +1,22 @@
+:host {
+  display: block;
+  height: 100vh;
+}
+
+.header {
+  background-color: var(--surface-300);
+}
+
+.header-container {
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-container {
+  width: 100%;
+  max-width: 800px;
+}
