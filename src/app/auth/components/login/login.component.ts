@@ -9,7 +9,6 @@ import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { PasswordModule } from 'primeng/password';
-import { ToastModule } from 'primeng/toast';
 import { Subject, filter, takeUntil } from 'rxjs';
 import { selectAuthError, selectAuthLoading } from '../../state/auth.selectors';
 import { LoginCredentials } from '../../types';
@@ -28,7 +27,6 @@ import { AuthActions } from '../../state';
     MessagesModule,
     RouterLink,
     PasswordModule,
-    ToastModule,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],

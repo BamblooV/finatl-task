@@ -10,7 +10,6 @@ import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { PasswordModule } from 'primeng/password';
-import { ToastModule } from 'primeng/toast';
 import { Subject, filter, takeUntil } from 'rxjs';
 import { AuthActions } from '../../state';
 import { UserCredentials } from '../../types';
@@ -29,7 +28,6 @@ import { selectAuthError, selectAuthLoading } from '../../state/auth.selectors';
     MessagesModule,
     RouterLink,
     PasswordModule,
-    ToastModule,
   ],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],

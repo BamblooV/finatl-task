@@ -2,13 +2,12 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MessageService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { ToastModule } from 'primeng/toast';
 import { MenuModule } from 'primeng/menu';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, ButtonModule, ToastModule, MenuModule],
+  imports: [CommonModule, ButtonModule, MenuModule],
   providers: [MessageService],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
@@ -32,11 +31,19 @@ export class LayoutComponent implements OnInit {
             label: 'Logout',
             icon: 'pi pi-sign-out',
             command: () => {
-              console.log('logout');
+              this.delete();
             },
           },
         ],
       },
     ];
+  }
+
+  update() {
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Data Updated' });
+  }
+
+  delete() {
+    this.messageService.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted' });
   }
 }
