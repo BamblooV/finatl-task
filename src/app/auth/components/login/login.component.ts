@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -10,7 +10,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
-import { filter } from 'rxjs';
+import { Subject, filter, takeUntil } from 'rxjs';
 import { selectAuthError, selectAuthLoading } from '../../state/auth.selectors';
 import { LoginCredentials } from '../../types';
 import { AuthActions } from '../../state';
@@ -34,17 +34,21 @@ import { AuthActions } from '../../state';
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   private errorMessages: Record<string, string> = {
     required: 'Field is required',
     email: 'Incorrect email',
     notFound: 'Unknown email or password',
   };
 
+  destroy$ = new Subject<void>();
   isLoading$ = this.store.select(selectAuthLoading);
   emailError$ = this.store
     .select(selectAuthError)
-    .pipe(filter(error => error?.type === 'NotFoundException'))
+    .pipe(
+      takeUntil(this.destroy$),
+      filter(error => !!error && error.type === 'NotFoundException')
+    )
     .subscribe({
       next: () => {
         this.form.setErrors({ notFound: true });
@@ -90,8 +94,6 @@ export class LoginComponent {
       password,
     };
 
-    console.log(userCreds);
-
     this.store.dispatch(AuthActions.loginUser({ credentials: userCreds }));
   }
 
@@ -99,4 +101,7 @@ export class LoginComponent {
     private readonly fb: FormBuilder,
     private readonly store: Store
   ) {}
+  ngOnDestroy(): void {
+    this.destroy$.next();
+  }
 }
