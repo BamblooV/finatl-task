@@ -1,13 +1,12 @@
 import { createAction, props } from '@ngrx/store';
 
-import { ErrorResponse } from '@core/types';
-import { LoginCredentials, LoginErrorResponse, User, UserCredentials } from '../types';
+import { LoginCredentials, SignupErrorResponse, LoginErrorResponse, User, UserCredentials } from '../types';
 
 export const registerUser = createAction('[Signup Page] Send form', props<{ credentials: UserCredentials }>());
 export const registerUserSuccess = createAction('[Auth API] Registration success', props<{ message: string }>());
 export const registerUserFailure = createAction(
   '[Auth API] Registration failure',
-  props<{ response: ErrorResponse }>()
+  props<{ response: SignupErrorResponse }>()
 );
 
 export const loginUser = createAction('[Login Page] Send form', props<{ credentials: LoginCredentials }>());

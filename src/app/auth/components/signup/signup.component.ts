@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { UniqueEmailValidator, passwordMatchesValidator, passwordStrengthValidator } from '@core/validators';
@@ -11,7 +11,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
-import { filter } from 'rxjs';
+import { Subject, filter, takeUntil } from 'rxjs';
 import { AuthActions } from '../../state';
 import { UserCredentials } from '../../types';
 import { selectAuthError, selectAuthLoading } from '../../state/auth.selectors';
@@ -35,7 +35,7 @@ import { selectAuthError, selectAuthLoading } from '../../state/auth.selectors';
   styleUrls: ['./signup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SignupComponent {
+export class SignupComponent implements OnDestroy {
   private errorMessages: Record<string, string> = {
     required: 'Field is required',
     maxlength: 'Name max length is 40 characters',
@@ -48,10 +48,14 @@ export class SignupComponent {
     emailExist: 'Email already taken',
   };
 
+  destroy$ = new Subject<void>();
   isLoading$ = this.store.select(selectAuthLoading);
   emailError$ = this.store
     .select(selectAuthError)
-    .pipe(filter(error => error?.type === 'PrimaryDuplicationException'))
+    .pipe(
+      takeUntil(this.destroy$),
+      filter(error => !!error && error.type === 'PrimaryDuplicationException')
+    )
     .subscribe({
       next: () => {
         this.emailControl?.setErrors({ emailExist: true });
@@ -66,7 +70,6 @@ export class SignupComponent {
       confirmPassword: ['', [Validators.required]],
     },
     {
-      updateOn: 'change',
       validators: [passwordMatchesValidator],
     }
   );
@@ -119,4 +122,8 @@ export class SignupComponent {
     private readonly store: Store,
     private readonly uniqueEmail: UniqueEmailValidator
   ) {}
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+  }
 }
