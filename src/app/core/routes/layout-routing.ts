@@ -4,8 +4,12 @@ import { LayoutComponent } from '../components/layout/layout.component';
 export default [
   {
     path: '',
-    pathMatch: 'full',
     component: LayoutComponent,
-    children: [],
+    children: [
+      {
+        path: 'profile',
+        loadComponent: () => import('@user/components/profile/profile.component').then(mod => mod.ProfileComponent),
+      },
+    ],
   },
 ] satisfies Route[];

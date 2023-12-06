@@ -6,7 +6,6 @@ import { isLoggedOutGuard } from './core/guards/is-logged-out.guard';
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
     loadChildren: () => import('@core/routes/layout-routing'),
     canActivate: [isAuthGuard],
   },
