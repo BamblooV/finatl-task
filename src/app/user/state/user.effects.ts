@@ -21,10 +21,27 @@ export class UserInfoEffects {
     );
   });
 
+  updateUserName = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserInfoActions.updateUserName),
+      exhaustMap(action =>
+        this.userInfo.updateUserName(action.name).pipe(
+          map(() => {
+            return UserInfoActions.updateUserNameSuccess({
+              name: action.name,
+              message: 'Profile info successfully updated',
+            });
+          }),
+          catchError(error => of(UserInfoActions.updateUserNameFailure({ response: error })))
+        )
+      )
+    );
+  });
+
   showSuccessNotification$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(UserInfoActions.fetchUserInfoSuccess),
+        ofType(UserInfoActions.fetchUserInfoSuccess, UserInfoActions.updateUserNameSuccess),
         tap(action => {
           this.toast.add({ severity: 'success', summary: 'Success', detail: action.message });
         })
@@ -36,7 +53,7 @@ export class UserInfoEffects {
   showFailureNotification$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(UserInfoActions.fetchUserInfoFailure),
+        ofType(UserInfoActions.fetchUserInfoFailure, UserInfoActions.updateUserNameFailure),
         tap(action => {
           this.toast.add({ severity: 'error', summary: 'Failed to register', detail: action.response.message });
         })

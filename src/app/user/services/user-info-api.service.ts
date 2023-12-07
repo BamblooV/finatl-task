@@ -42,6 +42,18 @@ export class UserInfoApiService {
       })
     );
   }
+
+  updateUserName(name: string) {
+    return this.http.put(`${this.baseUrl}/profile`, { name }).pipe(
+      catchError((response: HttpErrorResponse) => {
+        if (response.status >= 500) {
+          return throwError(() => ({ type: 'Unknown', message: 'Internal server error. Try later.' }));
+        }
+
+        return throwError(() => ({ type: response.error.type, message: response.error.message }));
+      })
+    );
+  }
   constructor(
     private readonly http: HttpClient,
     private readonly store: Store
