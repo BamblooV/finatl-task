@@ -103,5 +103,6 @@ export class LoginComponent implements OnDestroy {
   ) {}
   ngOnDestroy(): void {
     this.destroy$.next();
+    this.destroy$.complete();
   }
 }
