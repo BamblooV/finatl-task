@@ -33,7 +33,8 @@
       "@shared/*": ["src/app/shared/*"],
       "@env/*": ["src/environments/*"],
       "@core/*": ["src/app/core/*"],
-      "@auth/*": ["src/app/auth/*"]
+      "@auth/*": ["src/app/auth/*"],
+      "@chat/*": ["src/app/chat/*"]
     }
   },
   "angularCompilerOptions": {

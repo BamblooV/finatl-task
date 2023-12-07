@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { UniqueEmailValidator, passwordMatchesValidator, passwordStrengthValidator } from '@core/validators';
 import { Store } from '@ngrx/store';
@@ -12,6 +12,7 @@ import { MessagesModule } from 'primeng/messages';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
 import { Subject, filter, takeUntil } from 'rxjs';
+import { getErrorMessageFactory } from '@shared/utils/getErrorMessageFactory';
 import { AuthActions } from '../../state';
 import { UserCredentials } from '../../types';
 import { selectAuthError, selectAuthLoading } from '../../state/auth.selectors';
@@ -87,18 +88,7 @@ export class SignupComponent implements OnDestroy {
     return this.form.get('confirmPassword');
   }
 
-  getErrorMessage(control: AbstractControl | null): string {
-    if (!control) return '';
-    if (!control.errors) return '';
-
-    const errorKey = Object.keys(control.errors)[0];
-
-    if (errorKey && this.errorMessages[errorKey]) {
-      return this.errorMessages[errorKey] || 'Wrong value';
-    }
-
-    return 'Wrong value';
-  }
+  getErrorMessage = getErrorMessageFactory(this.errorMessages);
 
   onSubmit() {
     this.form.markAllAsTouched();
@@ -125,5 +115,6 @@ export class SignupComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.destroy$.next();
+    this.destroy$.complete();
   }
 }

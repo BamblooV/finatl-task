@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { isAuthGuard } from './core/guards/is-auth.guard';
+import { isLoggedOutGuard } from './core/guards/is-logged-out.guard';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'auth/login',
+    loadComponent: () => import('@chat/components/layout/layout.component').then(mod => mod.LayoutComponent),
+    canActivate: [isAuthGuard],
   },
   {
     path: 'auth',
+    canActivate: [isLoggedOutGuard],
     children: [
       {
         path: 'signup',
@@ -16,10 +20,17 @@ const routes: Routes = [
       },
       {
         path: 'login',
-        loadComponent: () => import('@auth/components/signup/signup.component').then(mod => mod.SignupComponent),
-        // redirectTo: 'signup',
+        loadComponent: () => import('@auth/components/login/login.component').then(mod => mod.LoginComponent),
       },
     ],
+  },
+  {
+    path: '404',
+    loadComponent: () => import('@core/pages/not-found/not-found.component').then(mod => mod.NotFoundComponent),
+  },
+  {
+    path: '**',
+    redirectTo: '404',
   },
 ];
 
