@@ -60,7 +60,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   getErrorMessage = getErrorMessageFactory(this.errorMessages);
 
-  editUserInfo() {}
+  editUserInfo() {
+    if (this.name.invalid) return;
+
+    this.store.dispatch(UserInfoActions.updateUserName({ name: this.name.value }));
+  }
 
   constructor(private readonly store: Store) {}
 

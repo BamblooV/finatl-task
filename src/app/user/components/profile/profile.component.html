@@ -2,7 +2,14 @@
   <div class="controls">
     <button *ngIf="mode === 'view'" pButton pRipple icon="pi pi-user-edit" (click)="setEditMode()">Edit</button>
     <span *ngIf="mode === 'edit'" class="p-buttonset">
-      <button [disabled]="name.invalid || (loading$ | async)" pButton pRipple icon="pi pi-save">Save</button>
+      <button
+        [disabled]="name.invalid || (loading$ | async)"
+        pButton
+        pRipple
+        icon="pi pi-save"
+        (click)="editUserInfo()">
+        Save
+      </button>
       <button [disabled]="loading$ | async" pButton pRipple icon="pi pi-times" (click)="setViewMode()">Cancel</button>
     </span>
   </div>
@@ -41,6 +48,6 @@
   <div class="controls"></div>
 </ng-container>
 
-<ng-container *ngIf="loading$ | async as loading">
+<ng-container *ngIf="(userInfo$ | async) === null && (loading$ | async)">
   <h2 class="error-title">Load user profile data</h2>
 </ng-container>
