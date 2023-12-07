@@ -4,6 +4,7 @@ import { SignupErrorResponse } from './signup-error-response.model';
 
 export type AuthState = {
   currentUser: User | null;
+  email: string | null;
   error: SignupErrorResponse | LoginErrorResponse | null;
   loading: boolean;
 };

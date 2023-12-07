@@ -6,6 +6,7 @@ import { RootState } from '../../reducers/types';
 
 export const initialState: AuthState = {
   currentUser: null,
+  email: null,
   error: null,
   loading: false,
 };
@@ -26,16 +27,26 @@ export const authReducer = createReducer(
   storedState ?? initialState,
   on(
     AuthActions.registerUser,
-    AuthActions.loginUser,
     (): AuthState => ({
       currentUser: null,
+      email: null,
+      error: null,
+      loading: true,
+    })
+  ),
+  on(
+    AuthActions.loginUser,
+    (state, { credentials }): AuthState => ({
+      currentUser: null,
+      email: credentials.email,
       error: null,
       loading: true,
     })
   ),
   on(
     AuthActions.registerUserSuccess,
-    (): AuthState => ({
+    (state): AuthState => ({
+      ...state,
       currentUser: null,
       loading: false,
       error: null,
@@ -45,6 +56,7 @@ export const authReducer = createReducer(
     AuthActions.registerUserFailure,
     AuthActions.loginUserFailure,
     (state, { response }): AuthState => ({
+      email: null,
       currentUser: null,
       loading: false,
       error: response,
@@ -53,6 +65,7 @@ export const authReducer = createReducer(
   on(
     AuthActions.loginUserSuccess,
     (state, { user }): AuthState => ({
+      ...state,
       currentUser: user,
       loading: false,
       error: null,
