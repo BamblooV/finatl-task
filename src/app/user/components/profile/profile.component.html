@@ -1,8 +1,23 @@
 <ng-container *ngIf="userInfo$ | async as userInfo">
+  <div class="controls">
+    <button *ngIf="mode === 'view'" pButton pRipple icon="pi pi-user-edit" (click)="setEditMode()">Edit</button>
+    <span *ngIf="mode === 'edit'" class="p-buttonset">
+      <button [disabled]="name.invalid || (loading$ | async)" pButton pRipple icon="pi pi-save">Save</button>
+      <button [disabled]="loading$ | async" pButton pRipple icon="pi pi-times" (click)="setViewMode()">Cancel</button>
+    </span>
+  </div>
   <h2>User profile</h2>
   <div class="data-row">
     <div class="label">Name:</div>
-    <div class="data">{{ userInfo.name }}</div>
+    <div *ngIf="mode === 'view'" class="data">{{ userInfo.name }}</div>
+    <ng-container *ngIf="mode === 'edit'">
+      <div class="field">
+        <input type="text" pInputText [formControl]="name" />
+        <small *ngIf="name?.invalid && name?.touched" id="firstname-help" class="p-error">{{
+          getErrorMessage(name)
+        }}</small>
+      </div>
+    </ng-container>
   </div>
   <div class="data-row">
     <div class="label">Email:</div>
@@ -16,7 +31,6 @@
     <div class="label">Created at:</div>
     <div class="data">{{ userInfo.createdAt | date: 'medium' }}</div>
   </div>
-  <div class="controls"></div>
 </ng-container>
 
 <ng-container *ngIf="error$ | async as error">

@@ -1,3 +1,8 @@
+:host {
+  padding: 10px 0;
+  display: block;
+}
+
 .data-row {
   margin-bottom: 0.5rem;
 }
@@ -9,6 +14,14 @@
 
 .data {
   margin-top: 0.25rem;
+}
+
+.field {
+  margin-top: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  max-width: 20rem;
 }
 
 .error-title {
