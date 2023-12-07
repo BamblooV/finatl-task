@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -11,6 +11,7 @@ import { MessagesModule } from 'primeng/messages';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
 import { Subject, filter, takeUntil } from 'rxjs';
+import { getErrorMessageFactory } from '@shared/utils/getErrorMessageFactory';
 import { selectAuthError, selectAuthLoading } from '../../state/auth.selectors';
 import { LoginCredentials } from '../../types';
 import { AuthActions } from '../../state';
@@ -68,18 +69,7 @@ export class LoginComponent implements OnDestroy {
     return this.form.get('password');
   }
 
-  getErrorMessage(control: AbstractControl | null): string {
-    if (!control) return '';
-    if (!control.errors) return '';
-
-    const errorKey = Object.keys(control.errors)[0];
-
-    if (errorKey && this.errorMessages[errorKey]) {
-      return this.errorMessages[errorKey] || 'Wrong value';
-    }
-
-    return 'Wrong value';
-  }
+  getErrorMessage = getErrorMessageFactory(this.errorMessages);
 
   onSubmit() {
     this.form.markAllAsTouched();
