@@ -67,6 +67,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.store.dispatch(UserInfoActions.updateUserName({ name: this.name.value }));
   }
 
+  logout() {
+    // this.store.dispatch()
+  }
+
   constructor(private readonly store: Store) {}
 
   ngOnInit(): void {
