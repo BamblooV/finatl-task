@@ -1,4 +1,4 @@
-import { ActionReducer, INIT, UPDATE, createReducer, on } from '@ngrx/store';
+import { ActionReducer, createReducer, on } from '@ngrx/store';
 
 import { AuthActions } from './index';
 import { AuthState } from '../types';
@@ -6,24 +6,47 @@ import { RootState } from '../../reducers/types';
 
 export const initialState: AuthState = {
   currentUser: null,
+  email: null,
   error: null,
   loading: false,
 };
 
+let storedState: AuthState | null = null;
+
+try {
+  const storedValue = localStorage.getItem('auth');
+  if (storedValue) {
+    storedState = JSON.parse(storedValue);
+  }
+} catch (error) {
+  console.error('Failed to init stored state');
+  localStorage.removeItem('auth');
+}
+
 export const authReducer = createReducer(
-  initialState,
+  storedState ?? initialState,
   on(
     AuthActions.registerUser,
-    AuthActions.loginUser,
     (): AuthState => ({
       currentUser: null,
+      email: null,
+      error: null,
+      loading: true,
+    })
+  ),
+  on(
+    AuthActions.loginUser,
+    (state, { credentials }): AuthState => ({
+      currentUser: null,
+      email: credentials.email,
       error: null,
       loading: true,
     })
   ),
   on(
     AuthActions.registerUserSuccess,
-    (): AuthState => ({
+    (state): AuthState => ({
+      ...state,
       currentUser: null,
       loading: false,
       error: null,
@@ -33,6 +56,7 @@ export const authReducer = createReducer(
     AuthActions.registerUserFailure,
     AuthActions.loginUserFailure,
     (state, { response }): AuthState => ({
+      email: null,
       currentUser: null,
       loading: false,
       error: response,
@@ -41,6 +65,7 @@ export const authReducer = createReducer(
   on(
     AuthActions.loginUserSuccess,
     (state, { user }): AuthState => ({
+      ...state,
       currentUser: user,
       loading: false,
       error: null,
@@ -50,17 +75,6 @@ export const authReducer = createReducer(
 
 export const authHydrationMetaReducer = (reducer: ActionReducer<RootState>): ActionReducer<RootState> => {
   return (state, action) => {
-    if (action.type === INIT || action.type === UPDATE) {
-      const storageValue = localStorage.getItem('auth');
-      if (storageValue) {
-        try {
-          const authState = JSON.parse(storageValue);
-          return { auth: authState };
-        } catch {
-          localStorage.removeItem('auth');
-        }
-      }
-    }
     const nextState = reducer(state, action);
     localStorage.setItem('auth', JSON.stringify(nextState.auth));
     return nextState;

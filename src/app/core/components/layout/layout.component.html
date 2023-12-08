@@ -1,0 +1,14 @@
+<header class="header">
+  <div class="header-container">
+    <h1 class="header__title">Final Task</h1>
+    <div class="user-chip">
+      <p-button [label]="'UserName'" [text]="true" [plain]="true" (click)="menu.toggle($event)"></p-button>
+      <p-menu #menu [model]="items" [popup]="true"></p-menu>
+    </div>
+  </div>
+</header>
+<main class="main">
+  <div class="main-container">
+    <router-outlet></router-outlet>
+  </div>
+</main>

@@ -4,9 +4,11 @@ import { ActionReducer, ActionReducerMap, createFeatureSelector, createSelector,
 import { authHydrationMetaReducer, authReducer } from '../auth/state/auth.reducer';
 import { AuthState } from '../auth/types';
 import { RootState } from './types';
+import { userInfoReducer } from '../user/state/user.reducer';
 
 export const reducers: ActionReducerMap<RootState> = {
   auth: authReducer,
+  user: userInfoReducer,
 };
 
 export const metaReducers: MetaReducer<RootState>[] = isDevMode()

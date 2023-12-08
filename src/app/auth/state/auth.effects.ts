@@ -23,10 +23,10 @@ export class AuthEffects {
   registerSuccess$ = createEffect(
     () => {
       return this.actions$.pipe(
-        (ofType(AuthActions.registerUserSuccess),
+        ofType(AuthActions.registerUserSuccess),
         tap(() => {
           this.router.navigateByUrl('auth/login');
-        }))
+        })
       );
     },
     { dispatch: false }
@@ -47,10 +47,10 @@ export class AuthEffects {
   loginSuccess$ = createEffect(
     () => {
       return this.actions$.pipe(
-        (ofType(AuthActions.loginUserSuccess),
+        ofType(AuthActions.loginUserSuccess),
         tap(() => {
           this.router.navigateByUrl('/');
-        }))
+        })
       );
     },
     { dispatch: false }

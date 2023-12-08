@@ -34,7 +34,8 @@
       "@env/*": ["src/environments/*"],
       "@core/*": ["src/app/core/*"],
       "@auth/*": ["src/app/auth/*"],
-      "@chat/*": ["src/app/chat/*"]
+      "@chat/*": ["src/app/chat/*"],
+      "@user/*": ["src/app/user/*"]
     }
   },
   "angularCompilerOptions": {

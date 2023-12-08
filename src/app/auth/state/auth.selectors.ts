@@ -10,3 +10,9 @@ export const selectAuthErrorEmail = createSelector(
   (state: AuthState) => state.error?.message.split(' ')?.[1]
 );
 export const selectAuthIsLoggedIn = createSelector(selectAuth, (state: AuthState) => !!state.currentUser);
+
+export const selectAuthCredentials = createSelector(selectAuth, (state: AuthState) => ({
+  'rs-uid': state.currentUser?.uid,
+  'rs-email': state.email,
+  Authorization: state.currentUser?.token,
+}));

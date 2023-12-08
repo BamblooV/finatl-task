@@ -1,0 +1,32 @@
+<ng-container *ngIf="userInfo$ | async as userInfo">
+  <h2>User profile</h2>
+  <div class="data-row">
+    <div class="label">Name:</div>
+    <div class="data">{{ userInfo.name }}</div>
+  </div>
+  <div class="data-row">
+    <div class="label">Email:</div>
+    <div class="data">{{ userInfo.email }}</div>
+  </div>
+  <div class="data-row">
+    <div class="label">ID:</div>
+    <div class="data">{{ userInfo.uid }}</div>
+  </div>
+  <div class="data-row">
+    <div class="label">Created at:</div>
+    <div class="data">{{ userInfo.createdAt | date: 'medium' }}</div>
+  </div>
+  <div class="controls"></div>
+</ng-container>
+
+<ng-container *ngIf="error$ | async as error">
+  <h2 class="error-title">Something went wrong</h2>
+  <div class="data-row">
+    <div class="label">{{ error.message }}</div>
+  </div>
+  <div class="controls"></div>
+</ng-container>
+
+<ng-container *ngIf="loading$ | async as loading">
+  <h2 class="error-title">Load user profile data</h2>
+</ng-container>

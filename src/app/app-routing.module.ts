@@ -6,8 +6,7 @@ import { isLoggedOutGuard } from './core/guards/is-logged-out.guard';
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    loadComponent: () => import('@chat/components/layout/layout.component').then(mod => mod.LayoutComponent),
+    loadChildren: () => import('@core/routes/layout-routing'),
     canActivate: [isAuthGuard],
   },
   {
