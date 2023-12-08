@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { UserInfoState } from '../types/user-info-state.model';
 import { UserInfoActions } from '.';
+import { UserInfo } from '../types';
 
 export const initialState: UserInfoState = {
   userInfo: null,
@@ -12,6 +13,7 @@ export const userInfoReducer = createReducer(
   initialState,
   on(
     UserInfoActions.fetchUserInfo,
+    UserInfoActions.updateUserName,
     (state): UserInfoState => ({
       ...state,
       loading: true,
@@ -31,6 +33,18 @@ export const userInfoReducer = createReducer(
       userInfo: null,
       error: response,
       loading: false,
+    })
+  ),
+  on(
+    UserInfoActions.updateUserNameSuccess,
+    (state, { name }): UserInfoState => ({
+      userInfo: {
+        // Bad explicit type cast. For now, there is no cases for update user name without fetch user data
+        ...(state.userInfo as UserInfo),
+        name,
+      },
+      loading: false,
+      error: null,
     })
   )
 );
