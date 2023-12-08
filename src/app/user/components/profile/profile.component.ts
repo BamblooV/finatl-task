@@ -27,8 +27,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   mode: ComponentModes = 'view';
 
-  private initialName = '';
-  name: FormControl = new FormControl(this.initialName, [
+  name: FormControl = new FormControl('', [
     Validators.required,
     Validators.maxLength(40),
     Validators.pattern(/^[a-zA-Z\s]+$/),
@@ -38,8 +37,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   userInfo$ = this.store.select(UserInfoSelectors.selectUserInfo).pipe(
     takeUntil(this.destroy$),
     tap(userInfo => {
-      this.initialName = userInfo?.name || '';
-      this.name.setValue(this.initialName);
+      this.name = new FormControl(userInfo?.name || '', {
+        validators: [Validators.required, Validators.maxLength(40), Validators.pattern(/^[a-zA-Z\s]+$/)],
+        nonNullable: true,
+      });
     })
   );
   loading$ = this.store.select(UserInfoSelectors.selectUserInfoLoading).pipe(takeUntil(this.destroy$));
@@ -55,7 +56,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   setViewMode() {
     this.changeMode('view');
-    this.name.reset(this.initialName);
+    this.name.reset();
   }
 
   getErrorMessage = getErrorMessageFactory(this.errorMessages);
