@@ -4,3 +4,4 @@ export * from './auth-state.model';
 export * from './signup-error-response.model';
 export * from './login-credentials.model';
 export * from './login-error-response.model';
+export * from './logout-error-response.model';

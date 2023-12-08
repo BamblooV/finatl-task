@@ -12,7 +12,7 @@
       </button>
       <button [disabled]="loading$ | async" pButton pRipple icon="pi pi-times" (click)="setViewMode()">Cancel</button>
     </span>
-    <button pButton pRipple icon="pi pi-sign-out" (click)="logout()">Logout</button>
+    <button [disabled]="authLoading$ | async" pButton pRipple icon="pi pi-sign-out" (click)="logout()">Logout</button>
   </div>
   <h2>User profile</h2>
   <div class="data-row">

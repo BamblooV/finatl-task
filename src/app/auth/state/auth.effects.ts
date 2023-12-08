@@ -3,6 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, of, tap } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { deleteAllCookies } from '@shared/utils/deleteAllCookie';
 import { AuthApiService } from '../services/auth-api.service';
 import { AuthActions } from '.';
 
@@ -56,10 +57,35 @@ export class AuthEffects {
     { dispatch: false }
   );
 
+  logoutUser = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.logout),
+      exhaustMap(() =>
+        this.authService.logoutUser().pipe(
+          map(() => AuthActions.logoutSuccess({ message: 'You successfully logged out.' })),
+          catchError(error => of(AuthActions.logoutFailure({ response: error })))
+        )
+      )
+    );
+  });
+
+  logoutUserSuccess = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(AuthActions.logoutSuccess),
+        tap(() => {
+          deleteAllCookies();
+          this.router.navigateByUrl('auth/login');
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
   showSuccessNotification$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(AuthActions.registerUserSuccess, AuthActions.loginUserSuccess),
+        ofType(AuthActions.registerUserSuccess, AuthActions.loginUserSuccess, AuthActions.logoutSuccess),
         tap(action => {
           this.toast.add({ severity: 'success', summary: 'Success', detail: action.message });
         })
@@ -71,7 +97,7 @@ export class AuthEffects {
   showFailureNotification$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(AuthActions.registerUserFailure, AuthActions.loginUserFailure),
+        ofType(AuthActions.registerUserFailure, AuthActions.loginUserFailure, AuthActions.logoutFailure),
         tap(action => {
           this.toast.add({ severity: 'error', summary: 'Failed to register', detail: action.response.message });
         })
