@@ -27,3 +27,10 @@
 .error-title {
   color: var(--red-800);
 }
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}

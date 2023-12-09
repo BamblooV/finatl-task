@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { getErrorMessageFactory } from '@shared/utils/getErrorMessageFactory';
 import { UserInfoActions, UserInfoSelectors } from '../../state';
+import { AuthActions, AuthSelectors } from '../../../auth/state';
 
 export type ComponentModes = 'edit' | 'view';
 
@@ -45,6 +46,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   );
   loading$ = this.store.select(UserInfoSelectors.selectUserInfoLoading).pipe(takeUntil(this.destroy$));
   error$ = this.store.select(UserInfoSelectors.selectUserInfoError).pipe(takeUntil(this.destroy$));
+  authLoading$ = this.store.select(AuthSelectors.selectAuthLoading).pipe(takeUntil(this.destroy$));
 
   private changeMode(nextMode: ComponentModes) {
     this.mode = nextMode;
@@ -65,6 +67,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     if (this.name.invalid) return;
 
     this.store.dispatch(UserInfoActions.updateUserName({ name: this.name.value }));
+  }
+
+  logout() {
+    this.store.dispatch(AuthActions.logout());
   }
 
   constructor(private readonly store: Store) {}
