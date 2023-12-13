@@ -1,0 +1,20 @@
+<div class="controls">
+  <p-button
+    [disabled]="!!(loading$ | async) || (countDown$ | async)! > 0"
+    (onClick)="updateUsers()"
+    label="Update"
+    size="small"></p-button>
+  <span *ngIf="countDown$ | async as countDown">
+    {{ countDown }}
+  </span>
+</div>
+
+<div *ngIf="users$ | async as users" class="users-container">
+  <button
+    *ngFor="let user of users; trackBy: trackByFn"
+    (click)="onUserClick(user)"
+    class="user"
+    [class.buddy]="user.conversationID !== null">
+    <span>{{ user.name }}</span>
+  </button>
+</div>
