@@ -24,12 +24,8 @@ const routes: Routes = [
     ],
   },
   {
-    path: '404',
-    loadComponent: () => import('@core/pages/not-found/not-found.component').then(mod => mod.NotFoundComponent),
-  },
-  {
     path: '**',
-    redirectTo: '404',
+    loadComponent: () => import('@core/pages/not-found/not-found.component').then(mod => mod.NotFoundComponent),
   },
 ];
 
