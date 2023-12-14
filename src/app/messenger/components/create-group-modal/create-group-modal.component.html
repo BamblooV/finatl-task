@@ -10,12 +10,11 @@
   </div>
   <ng-template pTemplate="footer">
     <p-button
-      [disabled]="control.invalid"
       icon="pi pi-check"
       (click)="onSubmit()"
       label="Ok"
       styleClass="p-button-text"
-      [disabled]="!!(loading$ | async)"></p-button>
+      [disabled]="!!(loading$ | async) || control.invalid"></p-button>
     <p-button
       icon="pi pi-times"
       (click)="onCancel()"
