@@ -24,6 +24,10 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'not-found',
+    loadComponent: () => import('@core/pages/not-found/not-found.component').then(mod => mod.NotFoundComponent),
+  },
+  {
     path: '**',
     loadComponent: () => import('@core/pages/not-found/not-found.component').then(mod => mod.NotFoundComponent),
   },
