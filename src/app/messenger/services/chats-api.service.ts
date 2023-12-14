@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { environment } from '@env/environment';
 import { Observable, catchError, forkJoin, map, of, switchMap, take, throwError } from 'rxjs';
-import { GetGroupsResponse } from '../types/get-groups-response.model';
+import { GetGroupsResponse } from '../types/groups/get-groups-response.model';
 import { GroupsSelectors } from '../state/groups';
 import {
   GetConversationsResponse,
