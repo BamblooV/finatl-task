@@ -16,3 +16,5 @@ export const selectAuthCredentials = createSelector(selectAuth, (state: AuthStat
   'rs-email': state.email,
   Authorization: state.currentUser?.token,
 }));
+
+export const selectAuthID = createSelector(selectAuth, (state: AuthState) => state.currentUser?.uid);

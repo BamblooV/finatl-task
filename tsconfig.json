@@ -35,7 +35,8 @@
       "@core/*": ["src/app/core/*"],
       "@auth/*": ["src/app/auth/*"],
       "@chat/*": ["src/app/chat/*"],
-      "@user/*": ["src/app/user/*"]
+      "@user/*": ["src/app/user/*"],
+      "@messenger/*": ["src/app/messenger/*"]
     }
   },
   "angularCompilerOptions": {

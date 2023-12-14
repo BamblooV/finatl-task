@@ -14,6 +14,8 @@ import { metaReducers, reducers } from './reducers';
 import { AuthEffects } from './auth/state/auth.effects';
 import { UserInfoEffects } from './user/state/user.effects';
 import { apiHeadersInterceptor } from './core/interceptors/api-headers.interceptor';
+import { GroupsEffects } from './messenger/state/groups/groups.effects';
+import { UsersEffects } from './messenger/state/users/users.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +26,7 @@ import { apiHeadersInterceptor } from './core/interceptors/api-headers.intercept
     AppRoutingModule,
     ToastModule,
     StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([AuthEffects, UserInfoEffects]),
+    EffectsModule.forRoot([AuthEffects, UserInfoEffects, GroupsEffects, UsersEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   providers: [MessageService, provideHttpClient(withInterceptors([apiHeadersInterceptor]))],

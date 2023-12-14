@@ -1,4 +1,9 @@
-export type LoginErrorResponse = {
-  type: 'InvalidFormDataException' | 'InvalidFormDataException' | 'InvalidFormDataException' | 'NotFoundException';
-  message: string;
-};
+import { ErrorResponse } from '@core/types';
+
+export type LoginErrorTypes =
+  | 'InvalidFormDataException'
+  | 'InvalidFormDataException'
+  | 'InvalidFormDataException'
+  | 'NotFoundException';
+
+export type LoginErrorResponse = ErrorResponse<LoginErrorTypes>;

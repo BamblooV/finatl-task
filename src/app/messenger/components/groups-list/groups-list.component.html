@@ -1,0 +1,30 @@
+<div class="controls">
+  <p-button
+    [disabled]="!!(loading$ | async) || (countDown$ | async)! > 0"
+    (onClick)="updateGroups()"
+    label="Update"
+    size="small"></p-button>
+  <span *ngIf="countDown$ | async as countDown">
+    {{ countDown }}
+  </span>
+  <p-button [disabled]="!!(loading$ | async)" (onClick)="openModal()" label="Create" size="small"></p-button>
+</div>
+
+<ng-container *ngIf="myID$ | async as myID">
+  <div *ngIf="groups$ | async as groups" class="groups-container">
+    <div [routerLink]="['group', group.id]" *ngFor="let group of groups; trackBy: trackByFn" class="group">
+      <span>{{ group.name }}</span>
+      <p-button
+        (onClick)="deleteGroup(group.id); $event.stopPropagation()"
+        *ngIf="group.createdBy === myID"
+        icon="pi pi-times"
+        [rounded]="true"
+        [text]="true"
+        size="small"
+        severity="danger "></p-button>
+    </div>
+  </div>
+</ng-container>
+
+<app-create-group-modal [visible]="modalIsOpen" (closeModal)="closeModal()"></app-create-group-modal>
+<p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>

@@ -1,0 +1,42 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  padding: 1rem;
+  align-items: center;
+}
+
+.users-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.user {
+  border: 1px solid var(--teal-300);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  display: flex;
+  flex: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+
+.buddy {
+  background-color: var(--teal-300);
+  border: 1px solid var(--teal-500);
+}
+
+.user:hover {
+  background-color: var(--teal-100);
+}
