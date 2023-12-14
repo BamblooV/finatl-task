@@ -28,7 +28,7 @@ export class ChatsApiService {
         return throwError(() => ({ type: 'Unknown', message: 'NGRX error.' }));
       }),
       switchMap(([groups, count]) => {
-        if (!groups || !groups.length) {
+        if (!groups?.length) {
           return this.updateGroups();
         }
 
