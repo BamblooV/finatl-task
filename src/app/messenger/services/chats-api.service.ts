@@ -93,7 +93,7 @@ export class ChatsApiService {
           return this.updateUsers();
         }
 
-        return of({ count, users });
+        return of({ count, users: Object.values(users) });
       })
     );
   }

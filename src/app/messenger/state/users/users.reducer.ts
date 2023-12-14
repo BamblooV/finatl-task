@@ -4,7 +4,7 @@ import { UsersActions } from '.';
 
 export const initialState: UsersState = {
   count: 0,
-  users: [],
+  users: {},
   lastFetchTime: null,
   error: null,
   loading: false,
@@ -24,16 +24,42 @@ export const usersReducer = createReducer(
   ),
   on(
     UsersActions.fetchUsersSuccess,
-    (state, { count, users }): UsersState => ({ ...state, count, users, error: null, loading: false })
+    (state, { count, users }): UsersState => ({
+      ...state,
+      count,
+      users: users.reduce<UsersState['users']>((acc, user) => {
+        acc[user.uid] = user;
+
+        return acc;
+      }, {}),
+      error: null,
+      loading: false,
+    })
   ),
   on(
     UsersActions.updateUsersSuccess,
-    (state, { count, users }): UsersState => ({ lastFetchTime: Date.now(), count, users, error: null, loading: false })
+    (state, { count, users }): UsersState => ({
+      lastFetchTime: Date.now(),
+      count,
+      users: users.reduce<UsersState['users']>((acc, user) => {
+        acc[user.uid] = user;
+
+        return acc;
+      }, {}),
+      error: null,
+      loading: false,
+    })
   ),
   on(UsersActions.createConversationSuccess, (state, { conversationID, companionID }): UsersState => {
     return {
       ...state,
-      users: state.users.map(user => (user.uid === companionID ? { ...user, conversationID } : user)),
+      users: Object.values(state.users)
+        .map(user => (user.uid === companionID ? { ...user, conversationID } : user))
+        .reduce<UsersState['users']>((acc, user) => {
+          acc[user.uid] = user;
+
+          return acc;
+        }, {}),
       error: null,
       loading: false,
     };

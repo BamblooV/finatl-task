@@ -40,8 +40,8 @@ export class UsersListComponent implements OnInit {
     )
   );
 
-  trackByFn(index: number, person: Person) {
-    return person.uid;
+  trackByFn(index: number, { key }: { key: string; value: Person }) {
+    return key;
   }
 
   updateUsers() {

@@ -11,10 +11,10 @@
 
 <div *ngIf="users$ | async as users" class="users-container">
   <button
-    *ngFor="let user of users; trackBy: trackByFn"
-    (click)="onUserClick(user)"
+    *ngFor="let user of users | keyvalue; trackBy: trackByFn"
+    (click)="onUserClick(user.value)"
     class="user"
-    [class.buddy]="user.conversationID !== null">
-    <span>{{ user.name }}</span>
+    [class.buddy]="user.value.conversationID !== null">
+    <span>{{ user.value.name }}</span>
   </button>
 </div>
