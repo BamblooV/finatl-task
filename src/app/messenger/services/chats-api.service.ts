@@ -28,11 +28,11 @@ export class ChatsApiService {
         return throwError(() => ({ type: 'Unknown', message: 'NGRX error.' }));
       }),
       switchMap(([groups, count]) => {
-        if (!groups?.length) {
+        if (!groups || !Object.values(groups).length) {
           return this.updateGroups();
         }
 
-        return of({ groups, count });
+        return of({ groups: Object.values(groups), count });
       })
     );
   }
