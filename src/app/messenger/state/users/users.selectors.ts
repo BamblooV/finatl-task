@@ -15,3 +15,5 @@ export const selectUsersAndCount = createSelector(
   selectUsersCount,
   (users, count): [UsersState['users'], number] => [users, count]
 );
+
+export const selectUserByID = (userID: string) => createSelector(selectUsers, users => users[userID]);

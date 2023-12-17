@@ -15,3 +15,5 @@ export const selectGroupsAndCount = createSelector(
   selectGroupsCount,
   (groups, count): [GroupsState['groups'], number] => [groups, count]
 );
+
+export const selectGroup = (groupID: string) => createSelector(selectGroups, groups => groups[groupID]);
