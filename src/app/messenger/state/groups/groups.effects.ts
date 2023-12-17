@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { catchError, combineLatestWith, exhaustMap, map, of, tap } from 'rxjs';
 import { CustomError } from '@core/errors/custom-error';
 import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 import { ChatsApiService } from '../../services/chats-api.service';
 import { GroupsActions } from '.';
 import { AuthSelectors } from '../../../auth/state';
@@ -67,7 +68,10 @@ export class GroupsEffects {
       ofType(GroupsActions.deleteGroup),
       exhaustMap(({ groupID }) =>
         this.chatsApi.deleteGroup(groupID).pipe(
-          map(() => GroupsActions.deleteGroupSuccess({ groupID, message: 'Group successfully deleted' })),
+          map(() => {
+            this.router.navigateByUrl('/');
+            return GroupsActions.deleteGroupSuccess({ groupID, message: 'Group successfully deleted' });
+          }),
           catchError(error => of(GroupsActions.deleteGroupFailure({ response: error })))
         )
       )
@@ -112,6 +116,7 @@ export class GroupsEffects {
     private readonly actions$: Actions,
     private readonly chatsApi: ChatsApiService,
     private readonly toast: MessageService,
-    private readonly store: Store
+    private readonly store: Store,
+    private readonly router: Router
   ) {}
 }

@@ -83,7 +83,6 @@ export class GroupDialogComponent implements OnInit, AfterViewChecked {
       icon: 'pi pi-info-circle',
       accept: () => {
         this.store.dispatch(GroupsActions.deleteGroup({ groupID: this.selectedGroupID }));
-        this.router.navigateByUrl('/');
       },
     });
   }
