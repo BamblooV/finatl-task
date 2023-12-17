@@ -116,19 +116,7 @@ export class GroupDialogComponent implements OnInit, AfterViewChecked {
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
     private readonly confirmationService: ConfirmationService
-  ) {
-    this.store
-      .select(GroupsSelectors.selectGroups)
-      .pipe(
-        take(1),
-        tap(groups => {
-          if (!groups || !Object.hasOwn(groups, this.selectedGroupID)) {
-            this.router.navigateByUrl('not-found', { skipLocationChange: true });
-          }
-        })
-      )
-      .subscribe();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.store.dispatch(GroupDialogActions.fetchMessages({ groupID: this.selectedGroupID }));
