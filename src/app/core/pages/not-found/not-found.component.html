@@ -1,1 +1,9 @@
-<p>not-found works!</p>
+<div class="container">
+  <h1>Page not found 404</h1>
+  <p>{{ url }} is unknown route</p>
+  <p-button *ngIf="uid$ | async; else logged" label="Go home" [link]="true" routerLink="/"></p-button>
+</div>
+
+<ng-template #logged>
+  <p-button label="Go login page" [link]="true" routerLink="/auth/login"></p-button>
+</ng-template>
