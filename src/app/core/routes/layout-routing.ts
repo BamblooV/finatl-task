@@ -17,6 +17,13 @@ export default [
           import('@messenger/pages/group-dialog/group-dialog.component').then(mod => mod.GroupDialogComponent),
       },
       {
+        path: 'conversation/:conversationID',
+        loadComponent: () =>
+          import('@messenger/pages/person-conversation/person-conversation.component').then(
+            mod => mod.PersonConversationComponent
+          ),
+      },
+      {
         path: 'profile',
         loadComponent: () => import('@user/components/profile/profile.component').then(mod => mod.ProfileComponent),
       },

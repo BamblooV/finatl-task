@@ -1,5 +1,5 @@
 import { AuthState } from '@auth/types';
-import { GroupDialogState, GroupsState, UsersState } from '@messenger/types';
+import { ConversationDialogState, GroupDialogState, GroupsState, UsersState } from '@messenger/types';
 import { UserInfoState } from '@user/types';
 
 export interface RootState {
@@ -8,4 +8,5 @@ export interface RootState {
   groups: GroupsState;
   users: UsersState;
   groupDialog: GroupDialogState;
+  conversationDialog: ConversationDialogState;
 }

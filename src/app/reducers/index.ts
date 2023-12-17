@@ -7,6 +7,7 @@ import { userInfoReducer } from '../user/state/user.reducer';
 import { groupsReducer } from '../messenger/state/groups/groups.reducer';
 import { usersReducer } from '../messenger/state/users/users.reducer';
 import { groupDialogReducer } from '../messenger/state/group-dialog/group-dialog.reducer';
+import { conversationDialogReducer } from '../messenger/state/person-conversation/person-conversation.reducer';
 
 export const reducers: ActionReducerMap<RootState> = {
   auth: authReducer,
@@ -14,6 +15,7 @@ export const reducers: ActionReducerMap<RootState> = {
   groups: groupsReducer,
   users: usersReducer,
   groupDialog: groupDialogReducer,
+  conversationDialog: conversationDialogReducer,
 };
 
 export const metaReducers: MetaReducer<RootState>[] = isDevMode()
