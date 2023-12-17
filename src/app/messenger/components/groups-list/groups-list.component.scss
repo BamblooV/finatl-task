@@ -23,11 +23,11 @@
   border-radius: 0.5rem;
   padding: 0.75rem;
   display: flex;
-  flex: row;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
   transition: background-color 0.5s ease;
+  background-color: var(--surface-0);
 }
 
 .group:hover {
