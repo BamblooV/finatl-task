@@ -12,3 +12,7 @@ export * from './users/get-conversations-response.model';
 export * from './users/get-conversations-error.model';
 export * from './users/post-conversation-response.model';
 export * from './users/post-conversation-error.model';
+export * from './message.model';
+export * from './group-dialog/get-group-dialog-errors.model';
+export * from './group-dialog/group-dialog-state.model';
+export * from './group-dialog/get-group-dialog-response.model';
