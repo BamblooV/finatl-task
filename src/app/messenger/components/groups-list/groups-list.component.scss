@@ -1,6 +1,8 @@
 :host {
   display: block;
-  width: 100%;
+  max-width: calc(50% - 20px);
+
+  // width: 100%;
 }
 
 .controls {
@@ -13,6 +15,7 @@
 
 .groups-container {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   gap: 0.5rem;
   width: 100%;
@@ -28,6 +31,8 @@
   cursor: pointer;
   transition: background-color 0.5s ease;
   background-color: var(--surface-0);
+  overflow: hidden;
+  max-width: 500px;
 }
 
 .group:hover {
