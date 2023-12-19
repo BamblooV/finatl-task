@@ -1,6 +1,14 @@
 <header class="header">
   <div class="header-container">
     <h1 class="header-title" routerLink="/">Final Task</h1>
+    <p-toggleButton
+      [(ngModel)]="isDarkTheme"
+      (onChange)="changeTheme($event)"
+      onLabel="Dark"
+      offLabel="Light"
+      [onIcon]="'pi pi-moon'"
+      offIcon="pi pi-sun"
+      [style]="{ width: '10em' }"></p-toggleButton>
     <div class="user-chip">
       <p-button [label]="'UserName'" [text]="true" [plain]="true" routerLink="profile"></p-button>
     </div>

@@ -11,12 +11,12 @@
 .header-container {
   flex: 0 0 auto;
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   margin: auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+  gap: 1rem;
 }
 
 .header-title {
@@ -29,7 +29,11 @@
 
 .main-container {
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   margin: auto;
   padding: 0 20px;
+}
+
+.user-chip {
+  margin-left: auto;
 }
