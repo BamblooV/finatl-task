@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { environment } from '@env/environment';
 import { Observable, catchError, forkJoin, map, of, switchMap, take, throwError } from 'rxjs';
-import { GetGroupsResponse } from '../types/get-groups-response.model';
+import { GetGroupsResponse } from '../types/groups/get-groups-response.model';
 import { GroupsSelectors } from '../state/groups';
 import {
   GetConversationsResponse,
@@ -28,11 +28,11 @@ export class ChatsApiService {
         return throwError(() => ({ type: 'Unknown', message: 'NGRX error.' }));
       }),
       switchMap(([groups, count]) => {
-        if (!groups?.length) {
+        if (!groups || !Object.values(groups).length) {
           return this.updateGroups();
         }
 
-        return of({ groups, count });
+        return of({ groups: Object.values(groups), count });
       })
     );
   }
@@ -93,7 +93,7 @@ export class ChatsApiService {
           return this.updateUsers();
         }
 
-        return of({ count, users });
+        return of({ count, users: Object.values(users) });
       })
     );
   }

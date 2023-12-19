@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { Group, GroupsState } from '../../types';
+import { GroupsState } from '../../types';
 
 export const selectGroupsState = createFeatureSelector<GroupsState>('groups');
 
@@ -13,5 +13,7 @@ export const selectGroups = createSelector(selectGroupsState, (state: GroupsStat
 export const selectGroupsAndCount = createSelector(
   selectGroups,
   selectGroupsCount,
-  (groups, count): [Group[], number] => [groups, count]
+  (groups, count): [GroupsState['groups'], number] => [groups, count]
 );
+
+export const selectGroup = (groupID: string) => createSelector(selectGroups, groups => groups[groupID]);

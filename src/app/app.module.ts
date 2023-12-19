@@ -16,6 +16,7 @@ import { UserInfoEffects } from './user/state/user.effects';
 import { apiHeadersInterceptor } from './core/interceptors/api-headers.interceptor';
 import { GroupsEffects } from './messenger/state/groups/groups.effects';
 import { UsersEffects } from './messenger/state/users/users.effects';
+import { GroupDialogEffects } from './messenger/state/group-dialog/group-dialog.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +27,7 @@ import { UsersEffects } from './messenger/state/users/users.effects';
     AppRoutingModule,
     ToastModule,
     StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([AuthEffects, UserInfoEffects, GroupsEffects, UsersEffects]),
+    EffectsModule.forRoot([AuthEffects, UserInfoEffects, GroupsEffects, UsersEffects, GroupDialogEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   providers: [MessageService, provideHttpClient(withInterceptors([apiHeadersInterceptor]))],

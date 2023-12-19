@@ -1,0 +1,53 @@
+<ng-container *ngIf="error$ | async as error; else content">
+  {{ error.message }}
+</ng-container>
+
+<ng-template #content>
+  <div class="controls">
+    <p-button label="Go home" [link]="true" routerLink="/" size="small"></p-button>
+    <p-button
+      label="Update"
+      size="small"
+      [disabled]="!!(loading$ | async) || (countDown$ | async)! > 0"
+      (onClick)="updateMessages()"></p-button>
+    <span *ngIf="countDown$ | async as countDown">
+      {{ countDown }}
+    </span>
+    <p-button
+      *ngIf="isGroupOwner$ | async"
+      label="Delete"
+      size="small"
+      [disabled]="!!(loading$ | async)"
+      (onClick)="deleteGroup()"></p-button>
+  </div>
+  <div class="messenger-container">
+    <div class="message-list" #messageList>
+      <div
+        *ngFor="let message of messages$ | async"
+        class="message"
+        [class.my-message]="message.authorID === (userID$ | async)">
+        <div class="meta">
+          <div class="name">{{ (getUsername$(message.authorID) | async)?.name || 'Anonym' }}</div>
+          <div class="time">{{ message.createdAt | date }}</div>
+        </div>
+        <div class="text">{{ message.message }}</div>
+      </div>
+    </div>
+    <div class="send-form">
+      <textarea
+        rows="3"
+        cols="80"
+        pInputTextarea
+        [autoResize]="true"
+        placeholder="Type a message"
+        [formControl]="inputControl"></textarea>
+      <p-button
+        (onClick)="onSubmit(); $event.preventDefault()"
+        icon="pi pi-send"
+        [rounded]="true"
+        [disabled]="!!(loading$ | async) || inputControl.invalid"></p-button>
+    </div>
+  </div>
+</ng-template>
+
+<p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>

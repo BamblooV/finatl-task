@@ -4,7 +4,7 @@ import { GroupsActions } from '.';
 
 export const initialState: GroupsState = {
   count: 0,
-  groups: [],
+  groups: {},
   lastFetchTime: null,
   error: null,
   loading: false,
@@ -35,8 +35,12 @@ export const groupsReducer = createReducer(
           id: groupID,
           name,
         },
-        ...state.groups,
-      ],
+        ...Object.values(state.groups),
+      ].reduce<GroupsState['groups']>((acc, group) => {
+        acc[group.id] = group;
+
+        return acc;
+      }, {}),
       loading: false,
       error: null,
     })
@@ -46,7 +50,13 @@ export const groupsReducer = createReducer(
     (state, { groupID }): GroupsState => ({
       ...state,
       count: state.count - 1,
-      groups: state.groups.filter(group => group.id !== groupID),
+      groups: Object.values(state.groups)
+        .filter(group => group.id !== groupID)
+        .reduce<GroupsState['groups']>((acc, group) => {
+          acc[group.id] = group;
+
+          return acc;
+        }, {}),
       loading: false,
       error: null,
     })
@@ -55,7 +65,11 @@ export const groupsReducer = createReducer(
     GroupsActions.fetchGroupsSuccess,
     (state, { count, groups }): GroupsState => ({
       ...state,
-      groups,
+      groups: groups.reduce<GroupsState['groups']>((acc, group) => {
+        acc[group.id] = group;
+
+        return acc;
+      }, {}),
       count,
       loading: false,
       error: null,
@@ -64,7 +78,11 @@ export const groupsReducer = createReducer(
   on(
     GroupsActions.updateGroupsSuccess,
     (state, { count, groups }): GroupsState => ({
-      groups,
+      groups: groups.reduce<GroupsState['groups']>((acc, group) => {
+        acc[group.id] = group;
+
+        return acc;
+      }, {}),
       count,
       loading: false,
       error: null,

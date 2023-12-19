@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { Person, UsersState } from '../../types';
+import { UsersState } from '../../types';
 
 export const selectUsersState = createFeatureSelector<UsersState>('users');
 
@@ -10,7 +10,10 @@ export const selectUsersCount = createSelector(selectUsersState, (state: UsersSt
 export const selectUsersLastFetchTime = createSelector(selectUsersState, (state: UsersState) => state.lastFetchTime);
 export const selectUsers = createSelector(selectUsersState, (state: UsersState) => state.users);
 
-export const selectUsersAndCount = createSelector(selectUsers, selectUsersCount, (users, count): [Person[], number] => [
-  users,
-  count,
-]);
+export const selectUsersAndCount = createSelector(
+  selectUsers,
+  selectUsersCount,
+  (users, count): [UsersState['users'], number] => [users, count]
+);
+
+export const selectUserByID = (userID: string) => createSelector(selectUsers, users => users[userID]);

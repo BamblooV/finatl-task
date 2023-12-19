@@ -48,8 +48,8 @@ export class GroupsListComponent implements OnInit {
 
   modalIsOpen = false;
 
-  trackByFn(index: number, group: Group) {
-    return group.id;
+  trackByFn(index: number, { key }: { key: string; value: Group }) {
+    return key;
   }
 
   updateGroups() {

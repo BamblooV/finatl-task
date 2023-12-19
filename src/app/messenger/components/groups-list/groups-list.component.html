@@ -12,11 +12,14 @@
 
 <ng-container *ngIf="myID$ | async as myID">
   <div *ngIf="groups$ | async as groups" class="groups-container">
-    <div [routerLink]="['group', group.id]" *ngFor="let group of groups; trackBy: trackByFn" class="group">
-      <span>{{ group.name }}</span>
+    <div
+      [routerLink]="['group', group.value.id]"
+      *ngFor="let group of groups | keyvalue; trackBy: trackByFn"
+      class="group">
+      <span>{{ group.value.name }}</span>
       <p-button
-        (onClick)="deleteGroup(group.id); $event.stopPropagation()"
-        *ngIf="group.createdBy === myID"
+        (onClick)="deleteGroup(group.value.id); $event.stopPropagation()"
+        *ngIf="group.value.createdBy === myID"
         icon="pi pi-times"
         [rounded]="true"
         [text]="true"

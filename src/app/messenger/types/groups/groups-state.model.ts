@@ -4,7 +4,7 @@ import { Group } from './group.model';
 import { PostGroupErrorResponse } from './post-group-error';
 
 export type GroupsState = {
-  groups: Group[];
+  groups: Record<string, Group>;
   count: number;
   loading: boolean;
   error: DeleteGroupErrorResponse | GetGroupsErrorResponse | PostGroupErrorResponse | null;

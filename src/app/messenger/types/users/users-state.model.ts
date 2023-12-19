@@ -4,7 +4,7 @@ import { Person } from './person.model';
 import { PostConversationErrorResponse } from './post-conversation-error.model';
 
 export type UsersState = {
-  users: Person[];
+  users: Record<string, Person>;
   count: number;
   loading: boolean;
   error: PostConversationErrorResponse | GetPersonsErrorResponse | GetConversationsErrorResponser | null;
