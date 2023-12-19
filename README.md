@@ -2,26 +2,39 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
 
+[Deploy](https://bambloov.github.io/finatl-task/)
+
+Credentials which you can use:
+email: 'mail@mail'
+password: 'A1!123123'
+
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+```bash
+git clone git@github.com:BamblooV/finatl-task.git
+npm ci
+npm run start
+```
 
-## Code scaffolding
+## About work
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Lack of time and skill led to the fact that I gradually began to lose control over the code and it turned into what it turned into
 
-## Build
+The design was kept simple.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+There are several bugs due to the fact that I took a component library that I did not work with.
 
-## Running unit tests
+Some tasks explicitly require you to use a link instead of a button. There was no separate link in the component library, but there was an option to [turn a button into a link](https://primeng.org/button#link). I didn’t want to do something of my own, so I took it. Essentially, we need a link to create a11y. I hope that the creators of the component library took care of this. Please do not deduct points for this.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Milestones
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- [Milestone 1. Registration](https://github.com/BamblooV/finatl-task/pull/1) self-check: 60\60
+- [Milestone 2. Login](https://github.com/BamblooV/finatl-task/pull/2) self-check: 70\70
+- [Milestone 3. Profile](https://github.com/BamblooV/finatl-task/pull/3) self-check: 40\40
+- [Milestone 4. Profile updating](https://github.com/BamblooV/finatl-task/pull/4) self-check: 55\55
+- [Milestone 5. Logout](https://github.com/BamblooV/finatl-task/pull/5) self-check: 40\40
+- [Milestone 6. People & Groups](https://github.com/BamblooV/finatl-task/pull/6) self-check: 175\175
+- [Milestone 7. Group dialog](https://github.com/BamblooV/finatl-task/pull/7) self-check: 140\140
+- [Milestone 8. Person conversation](https://github.com/BamblooV/finatl-task/pull/8) self-check: 140\140
+- [Milestone 9. 404 page](https://github.com/BamblooV/finatl-task/pull/9) self-check: 30\30
+- [Milestone 10. Dark/Light theme](https://github.com/BamblooV/finatl-task/pull/10) self-check: 50\50
