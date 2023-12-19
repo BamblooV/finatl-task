@@ -42,6 +42,7 @@
 </ng-container>
 
 <ng-container *ngIf="error$ | async as error">
+  <button [disabled]="authLoading$ | async" pButton pRipple icon="pi pi-sign-out" (click)="logout()">Logout</button>
   <h2 class="error-title">Something went wrong</h2>
   <div class="data-row">
     <div class="label">{{ error.message }}</div>
