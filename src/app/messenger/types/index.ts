@@ -16,3 +16,9 @@ export * from './message.model';
 export * from './group-dialog/get-group-dialog-errors.model';
 export * from './group-dialog/group-dialog-state.model';
 export * from './group-dialog/get-group-dialog-response.model';
+
+export * from './person-conversation/delete-conversation-dialog-error.model';
+export * from './person-conversation/get-conversation-messages-response.model';
+export * from './person-conversation/get-conversations-dialog-error.model';
+export * from './person-conversation/person-conversation-state.model';
+export * from './person-conversation/post-conversation-dialog-message-error.model';

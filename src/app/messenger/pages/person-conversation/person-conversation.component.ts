@@ -1,55 +1,47 @@
 import { AfterViewChecked, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { forkJoin, map, startWith, switchMap, take, tap, timer } from 'rxjs';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
-import { concatLatestFrom } from '@ngrx/effects';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { forkJoin, map, startWith, switchMap, take, tap, timer } from 'rxjs';
 import { AuthSelectors } from '@auth/state';
-import { GroupsActions, GroupsSelectors } from '../../state/groups';
-import { GroupDialogActions, GroupDialogSelectors } from '../../state/group-dialog';
+import { ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ConversationActions, ConversationSelectors } from '../../state/person-conversation';
 import { UsersSelectors } from '../../state/users';
 
 @Component({
-  selector: 'app-group-dialog',
+  selector: 'app-person-conversation',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule, ButtonModule, InputTextareaModule, ConfirmDialogModule],
-  templateUrl: './group-dialog.component.html',
-  styleUrls: ['./group-dialog.component.scss'],
+  templateUrl: './person-conversation.component.html',
+  styleUrls: ['./person-conversation.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ConfirmationService],
 })
-export class GroupDialogComponent implements OnInit, AfterViewChecked {
+export class PersonConversationComponent implements OnInit, AfterViewChecked {
   @ViewChild('messageList') private messageList!: ElementRef;
 
-  selectedGroupID = this.activatedRoute.snapshot.paramMap.get('groupID') || '';
+  selectedConversationID = this.activatedRoute.snapshot.paramMap.get('conversationID') || '';
   messages$ = this.store
-    .select(GroupDialogSelectors.selectGroupMessages(this.selectedGroupID))
+    .select(ConversationSelectors.selectConversationMessages(this.selectedConversationID))
     .pipe(tap(() => this.scrollToBottom()));
+
   loading$ = forkJoin([
-    this.store.select(GroupDialogSelectors.selectLoading),
-    this.store.select(GroupsSelectors.selectGroupsLoading),
+    this.store.select(ConversationSelectors.selectLoading),
+    this.store.select(UsersSelectors.selectUsersLoading),
   ]).pipe(
     map(loadings => {
       return loadings.some(value => value);
     })
   );
-  error$ = this.store.select(GroupDialogSelectors.selectError);
-
-  isGroupOwner$ = this.store.select(GroupsSelectors.selectGroup(this.selectedGroupID)).pipe(
-    concatLatestFrom(() => this.store.select(AuthSelectors.selectAuthID)),
-    map(([group, userID]) => {
-      return group?.createdBy === userID;
-    })
-  );
+  error$ = this.store.select(ConversationSelectors.selectError);
 
   userID$ = this.store.select(AuthSelectors.selectAuthID);
 
-  timeDelay$ = this.store.select(GroupDialogSelectors.selectLastUpdateTime).pipe(
+  timeDelay$ = this.store.select(ConversationSelectors.selectLastUpdateTime).pipe(
     // eslint-disable-next-line @ngrx/avoid-mapping-selectors
     map(lastFetchTime => {
       if (!lastFetchTime) return 0;
@@ -73,16 +65,16 @@ export class GroupDialogComponent implements OnInit, AfterViewChecked {
   inputControl = new FormControl('', [Validators.required]);
 
   updateMessages() {
-    this.store.dispatch(GroupDialogActions.updateMessages({ groupID: this.selectedGroupID }));
+    this.store.dispatch(ConversationActions.updateMessages({ conversationID: this.selectedConversationID }));
   }
 
-  deleteGroup() {
+  deleteConversation() {
     this.confirmationService.confirm({
-      message: 'Do you want to delete your group?',
+      message: 'Do you want to delete conversation?',
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-        this.store.dispatch(GroupsActions.deleteGroup({ groupID: this.selectedGroupID }));
+        this.store.dispatch(ConversationActions.deleteConversation({ conversationID: this.selectedConversationID }));
       },
     });
   }
@@ -93,7 +85,7 @@ export class GroupDialogComponent implements OnInit, AfterViewChecked {
     if (!this.inputControl.value) return;
 
     this.store.dispatch(
-      GroupDialogActions.sendMessage({ groupID: this.selectedGroupID, message: this.inputControl.value })
+      ConversationActions.sendMessage({ conversationID: this.selectedConversationID, message: this.inputControl.value })
     );
     this.inputControl.reset();
   }
@@ -119,7 +111,7 @@ export class GroupDialogComponent implements OnInit, AfterViewChecked {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(GroupDialogActions.fetchMessages({ groupID: this.selectedGroupID }));
+    this.store.dispatch(ConversationActions.fetchMessages({ conversationID: this.selectedConversationID }));
   }
 
   ngAfterViewChecked() {

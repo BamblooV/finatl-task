@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { UsersState } from '../../types';
 import { UsersActions } from '.';
+import { ConversationActions } from '../person-conversation';
 
 export const initialState: UsersState = {
   count: 0,
@@ -16,6 +17,7 @@ export const usersReducer = createReducer(
     UsersActions.fetchUsers,
     UsersActions.createConversation,
     UsersActions.updateUsers,
+    ConversationActions.deleteConversation,
     (state): UsersState => ({
       ...state,
       error: null,
@@ -55,6 +57,20 @@ export const usersReducer = createReducer(
       ...state,
       users: Object.values(state.users)
         .map(user => (user.uid === companionID ? { ...user, conversationID } : user))
+        .reduce<UsersState['users']>((acc, user) => {
+          acc[user.uid] = user;
+
+          return acc;
+        }, {}),
+      error: null,
+      loading: false,
+    };
+  }),
+  on(ConversationActions.deleteConversationSuccess, (state, { conversationID }): UsersState => {
+    return {
+      ...state,
+      users: Object.values(state.users)
+        .map(user => (user.conversationID === conversationID ? { ...user, conversationID: null } : user))
         .reduce<UsersState['users']>((acc, user) => {
           acc[user.uid] = user;
 
